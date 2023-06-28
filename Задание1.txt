@@ -1,0 +1,27 @@
+public class Main {
+    public static void main(String[] args) {
+        // Создание JSON объекта из строки
+        JSONObject jsonObject = new JSONObject();
+
+        // Создание StringBuilder для формирования части WHERE запроса
+        StringBuilder whereClause = new StringBuilder("select * from students where ");
+
+        // Перебор всех ключей в JSON объекте
+        for (String key : jsonObject.keySet()) {
+            // Получение значения для текущего ключа
+            String value = jsonObject.getString(key);
+
+            // Проверка, что значение не равно "null"
+            if (!value.equals("null")) {
+                // Добавление условия в часть WHERE запроса
+                whereClause.append(key).append(" = \"").append(value).append("\" and ");
+            }
+        }
+
+        // Удаление последнего "and" из части WHERE запроса
+        whereClause.delete(whereClause.length() - 5, whereClause.length());
+
+        // Вывод итогового SQL-запроса
+        System.out.println(whereClause.toString());
+    }
+}
